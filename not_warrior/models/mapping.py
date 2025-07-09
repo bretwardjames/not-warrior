@@ -1,0 +1,1 @@
+# Mapping model - field mappings between Notion properties and Taskwarrior attributes

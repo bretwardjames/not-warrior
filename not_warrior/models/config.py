@@ -1,0 +1,1 @@
+# Configuration model - sync settings, authentication tokens, user preferences

@@ -1,0 +1,1 @@
+# Sync commands - manual sync, install/remove hooks, sync status

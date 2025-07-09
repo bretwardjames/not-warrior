@@ -1,0 +1,1 @@
+# Hook system - Taskwarrior hook installation, event handling, auto-sync

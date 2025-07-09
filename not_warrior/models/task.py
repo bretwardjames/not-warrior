@@ -1,0 +1,1 @@
+# Task model - unified task representation for both Notion and Taskwarrior

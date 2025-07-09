@@ -1,0 +1,1 @@
+# Configuration commands - field mappings, sync parameters, preferences

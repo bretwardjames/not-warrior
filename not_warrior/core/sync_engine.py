@@ -1,0 +1,1 @@
+# Sync engine - bidirectional sync logic, conflict resolution, change detection
