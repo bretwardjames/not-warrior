@@ -1,1 +1,176 @@
-# Sample configuration file - copy to config.yml and customize
+# not-warrior Configuration File
+# Copy this file to config.yml and customize for your setup
+
+# Notion API Configuration
+notion:
+  # Your Notion API token (required)
+  # Get this from https://www.notion.so/my-integrations
+  api_token: "secret_your_notion_api_token_here"
+  
+  # API version to use (usually don't need to change)
+  api_version: "2022-06-28"
+  
+  # Request timeout in seconds
+  timeout: 30
+  
+  # Rate limiting: requests per second
+  requests_per_second: 3
+
+# Taskwarrior Configuration
+taskwarrior:
+  # Path to taskwarrior command (usually just 'task')
+  command_path: "task"
+  
+  # Optional: Custom data location
+  # data_location: "/path/to/taskwarrior/data"
+  
+  # Tag used to identify Notion-synced tasks
+  notion_tag: "notion"
+  
+  # Hook configuration
+  hook_enabled: false
+  hook_events:
+    - "on-modify"
+
+# Synchronization Settings
+sync:
+  # Sync direction: both, to-notion, to-taskwarrior
+  direction: "both"
+  
+  # Enable automatic sync (requires hook installation)
+  auto_sync: false
+  
+  # Conflict resolution strategy: manual, notion, taskwarrior
+  conflict_resolution: "manual"
+  
+  # Sync interval in minutes (for auto-sync)
+  sync_interval_minutes: 15
+  
+  # Backup before sync
+  backup_before_sync: true
+  backup_count: 5
+
+# Logging Configuration
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: "INFO"
+  
+  # Log file path (optional, empty for stdout only)
+  log_file: ""
+  
+  # Maximum log file size in bytes (10MB)
+  max_file_size: 10485760
+  
+  # Number of backup log files to keep
+  backup_count: 5
+  
+  # Log message format
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Database Mappings
+# Configure how Notion databases map to Taskwarrior
+mappings:
+  # Example mapping for a tasks database
+  - notion_database_id: "your_notion_database_id_here"
+    database_name: "My Tasks"
+    
+    # Sync configuration for this database
+    sync_direction: "both"
+    auto_sync: false
+    
+    # Optional filters
+    # notion_filter:
+    #   property: "Status"
+    #   select:
+    #     does_not_equal: "Archived"
+    # taskwarrior_filter: "status:pending"
+    
+    # Field mappings
+    mappings:
+      # Task title/description
+      - notion_field: "Name"
+        taskwarrior_field: "description"
+        field_type: "title"
+        required: true
+      
+      # Task status
+      - notion_field: "Status"
+        taskwarrior_field: "status"
+        field_type: "select"
+        value_mappings:
+          "Not started": "pending"
+          "In progress": "pending"
+          "Done": "completed"
+          "Cancelled": "deleted"
+      
+      # Priority
+      - notion_field: "Priority"
+        taskwarrior_field: "priority"
+        field_type: "select"
+        value_mappings:
+          "Low": "L"
+          "Medium": "M"
+          "High": "H"
+          "Critical": "H"
+      
+      # Due date
+      - notion_field: "Due Date"
+        taskwarrior_field: "due"
+        field_type: "date"
+      
+      # Tags
+      - notion_field: "Tags"
+        taskwarrior_field: "tags"
+        field_type: "multi_select"
+      
+      # Project
+      - notion_field: "Project"
+        taskwarrior_field: "project"
+        field_type: "select"
+
+# Additional Settings
+# Uncomment and customize as needed
+
+# data_dir: "/path/to/data/directory"
+# config_file: "/path/to/this/config/file"
+
+# Advanced Notion settings
+# notion:
+#   retry_attempts: 3
+#   retry_delay: 1.0
+#   max_page_size: 100
+
+# Advanced Taskwarrior settings
+# taskwarrior:
+#   export_format: "json"
+#   import_format: "json"
+#   date_format: "%Y-%m-%d"
+#   datetime_format: "%Y-%m-%dT%H:%M:%S"
+
+# Backup settings
+# backup:
+#   enabled: true
+#   directory: "backups"
+#   retention_days: 30
+#   compress: true
+
+# Performance settings
+# performance:
+#   batch_size: 50
+#   concurrent_requests: 3
+#   cache_ttl: 300
+
+# Security settings
+# security:
+#   verify_ssl: true
+#   user_agent: "not-warrior/0.1.0"
+
+# Notification settings (future feature)
+# notifications:
+#   enabled: false
+#   channels:
+#     - email
+#     - desktop
+#   on_sync_complete: true
+#   on_conflict: true
+#   on_error: true
